@@ -22,7 +22,7 @@ const {
 const usersRouter = require('./routes/users');
 const moviesRouter = require('./routes/movies');
 const constants = require('./utils/constants');
-const rateLimiter = require('./middlewares/rate-limiter')
+const rateLimiter = require('./middlewares/rate-limiter');
 
 dotenv.config();
 
