@@ -22,19 +22,23 @@ const {
 const usersRouter = require('./routes/users');
 const moviesRouter = require('./routes/movies');
 const constants = require('./utils/constants');
+const rateLimiter = require('./middlewares/rate-limiter')
 
 dotenv.config();
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, NODE_ENV, ENV_DB_URL } = process.env;
 const app = express();
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
+const currentDBUrl = NODE_ENV === 'production' ? ENV_DB_URL : constants.DB_URL;
+
+mongoose.connect(currentDBUrl);
 
 app.use(requestLogger);
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
+app.use(rateLimiter);
 
 app.post(
   '/signin',

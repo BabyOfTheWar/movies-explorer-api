@@ -15,4 +15,5 @@ module.exports = {
     NOT_FOUND_MESSAGE: 'Не найдено',
     NO_ACCESS: 'У вас нет прав на это действие',
   },
+  DB_URL : 'mongodb://127.0.0.1:27017/bitfilmsdb'
 };

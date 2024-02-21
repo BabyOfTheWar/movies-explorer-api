@@ -2,13 +2,16 @@ const Movie = require('../models/movie');
 const constants = require('../utils/constants');
 
 const getMovies = async (req, res, next) => {
+  const ownerId = req.user._id;
+
   try {
-    const movies = await Movie.find();
+    const movies = await Movie.find({ owner: ownerId });
     res.status(constants.HTTP_STATUS.OK)
       .json(movies);
   } catch (error) {
     next(error);
   }
+  return null;
 };
 
 const postMovie = async (req, res, next) => {
@@ -74,7 +77,7 @@ const deleteMovie = async (req, res, next) => {
 
     if (deletedMovie) {
       res.status(constants.HTTP_STATUS.OK)
-          .json(deletedMovie);
+        .json(deletedMovie);
     } else {
       return next({
         status: constants.HTTP_STATUS.NOT_FOUND,
@@ -84,8 +87,8 @@ const deleteMovie = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+  return null;
 };
-
 
 module.exports = {
   getMovies,
